@@ -21,6 +21,6 @@ require("lazy").setup({
   spec = {
     { import = "plugins" },
   },
-  install = { colorscheme = { "retrobox" } },
+  install = { colorscheme = { "default" } },
   checker = { enabled = true },
 })
