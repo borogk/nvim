@@ -28,7 +28,6 @@ vim.keymap.set("n", "<C-/>", function()
 		end
 	end
 	require("neo-tree.command").execute({
-		toggle = true,
 		reveal_file = reveal_file,
 		reveal_force_cwd = true,
 	})
