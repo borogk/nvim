@@ -24,3 +24,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end
 	end,
 })
+
+require("neo-tree").setup({
+	source_selector = {
+		statusline = true,
+	},
+	sources = {
+		"filesystem",
+		"buffers",
+		"git_status",
+	},
+})
