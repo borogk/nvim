@@ -12,6 +12,7 @@ vim.keymap.set("n", "<C-t>", "<cmd>Telescope<cr>")
 vim.keymap.set("n", "<C-n>", "<cmd>Telescope find_files<cr>")
 vim.keymap.set("n", "<C-g>", "<cmd>Telescope live_grep<cr>")
 vim.keymap.set("n", "<C-l>", vim.lsp.buf.format)
+vim.keymap.set("n", "<F12>", "<cmd>Telescope lsp_document_symbols<cr>")
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
