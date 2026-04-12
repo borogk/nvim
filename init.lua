@@ -10,6 +10,7 @@ vim.cmd.colorscheme("tokyonight-night")
 
 vim.keymap.set({ "n", "i", "v" }, "<C-t>", "<cmd>Telescope<cr>")
 vim.keymap.set({ "n", "i", "v" }, "<C-n>", "<cmd>Telescope find_files<cr>")
+vim.keymap.set({ "n", "i", "v" }, "<C-f>", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
 vim.keymap.set({ "n", "i", "v" }, "<C-l>", vim.lsp.buf.format)
 vim.keymap.set({ "n", "i", "v" }, "<F18>", vim.lsp.buf.rename)
 vim.keymap.set({ "n", "i", "v" }, "<F19>", "<cmd>Telescope lsp_references<cr>")
@@ -56,3 +57,8 @@ require("neo-tree").setup({
 		"git_status",
 	},
 })
+
+require('telescope').setup({
+  defaults = require('telescope.themes').get_ivy(),
+})
+
