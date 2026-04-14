@@ -9,6 +9,7 @@ vim.opt.completeopt = { "menuone", "popup", "noinsert" }
 vim.cmd.colorscheme("tokyonight-night")
 
 vim.keymap.set({ "n", "i", "v" }, "<C-c>", "<cmd>q<cr>")
+vim.keymap.set({ "n", "i", "v" }, "<F1>", function() Snacks.picker.help() end)
 vim.keymap.set({ "n", "i", "v" }, "<C-/>", function() Snacks.explorer.open() end)
 vim.keymap.set({ "n", "i", "v" }, "<C-\\>", function() Snacks.picker() end)
 vim.keymap.set({ "n", "i", "v" }, "<C-r>", function() Snacks.picker.recent() end)
@@ -33,6 +34,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			})
 		end
 	end,
+})
+
+-- Always open help on the left
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "help", "man" },
+	command = "wincmd L",
 })
 
 -- Fix lualine appearance for special type of buffers
