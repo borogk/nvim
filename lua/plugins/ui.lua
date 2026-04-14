@@ -1,13 +1,37 @@
+local enabled = {
+	enabled = true,
+}
+
+local sidebar = {
+	layout = {
+		preset = "sidebar",
+	},
+}
+
 return {
 	{
 		"folke/snacks.nvim",
 		lazy = false,
 		opts = {
-			explorer = { enabled = true },
-			notifier = { enabled = true },
+			explorer = enabled,
+			notifier = enabled,
+			words = enabled,
+			gitbrowse = enabled,
+			quickfile = enabled,
+			bigfile = enabled,
 			picker = {
 				sources = {
-					explorer = { hidden = true },
+					explorer = {
+						hidden = true,
+						auto_close = true,
+						layout = {
+							preset = "default",
+							preview = true,
+						},
+					},
+					git_diff = sidebar,
+					git_status = sidebar,
+					git_files = sidebar,
 				},
 			},
 		},
