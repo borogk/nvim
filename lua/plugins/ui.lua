@@ -2,12 +2,6 @@ local enabled = {
 	enabled = true,
 }
 
-local sidebar = {
-	layout = {
-		preset = "sidebar",
-	},
-}
-
 return {
 	{
 		"folke/snacks.nvim",
@@ -19,6 +13,7 @@ return {
 			gitbrowse = enabled,
 			quickfile = enabled,
 			bigfile = enabled,
+			lazygit = enabled,
 			picker = {
 				sources = {
 					explorer = {
@@ -29,9 +24,6 @@ return {
 							preview = true,
 						},
 					},
-					git_diff = sidebar,
-					git_status = sidebar,
-					git_files = sidebar,
 				},
 			},
 		},
