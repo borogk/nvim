@@ -28,7 +28,7 @@ return {
 			},
 		},
 	},
-	{ "folke/tokyonight.nvim", lazy = false },
+	{ "folke/tokyonight.nvim", lazy = false, priority = 1000 },
 	{ "nvim-tree/nvim-web-devicons" },
 	{ "nvim-lualine/lualine.nvim" },
 	{ "MunifTanjim/nui.nvim" },

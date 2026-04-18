@@ -11,6 +11,7 @@ vim.opt.completeopt = { "menuone", "popup", "noinsert" }
 vim.cmd.colorscheme("tokyonight-night")
 
 vim.keymap.set({ "n", "i", "v" }, "<C-c>", "<cmd>q<cr>")
+vim.keymap.set({ "n", "i", "v" }, "<C-t>", "<cmd>tabnew<cr>")
 vim.keymap.set({ "n", "i", "v" }, "<F1>", function() Snacks.picker.help() end)
 vim.keymap.set({ "n", "i", "v" }, "<C-\\>", function() Snacks.picker() end)
 vim.keymap.set({ "n", "i", "v" }, "<C-/>", function() Snacks.explorer.open() end)
@@ -39,6 +40,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "help", "man" },
 	command = "wincmd L",
+})
+
+-- Treesitter fix for Markdown
+vim.api.nvim_create_autocmd("FileType", {
+ 	pattern = { "markdown" },
+	callback = function()	vim.treesitter.start() end,
 })
 
 -- Fix lualine appearance for special type of buffers
