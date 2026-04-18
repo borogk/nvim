@@ -13,8 +13,6 @@ vim.cmd.colorscheme("tokyonight-moon")
 
 vim.keymap.set({ "n", "i", "v" }, "<C-c>", "<cmd>bdelete<cr>")
 vim.keymap.set({ "n", "i", "v" }, "<F1>", function() Snacks.picker.help() end)
-vim.keymap.set({ "n", "i", "v" }, "<F2>", function() require("persistence").load() end)
-vim.keymap.set({ "n", "i", "v" }, "<F3>", function() require("persistence").select() end)
 vim.keymap.set({ "n", "i", "v" }, "<C-\\>", function() Snacks.picker() end)
 vim.keymap.set({ "n", "i", "v" }, "<C-/>", function() Snacks.explorer.open() end)
 vim.keymap.set({ "n", "i", "v" }, "<C-.>", function() Snacks.picker.files() end)
