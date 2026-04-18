@@ -8,7 +8,6 @@ return {
 				"lua_ls",
 				"clangd",
 				"gopls",
-				"shfmt",
 			},
 		},
 	},
