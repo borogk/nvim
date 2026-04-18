@@ -8,15 +8,17 @@ vim.o.clipboard = "unnamedplus"
 vim.o.splitbelow = true
 vim.o.splitright = true
 vim.opt.completeopt = { "menuone", "popup", "noinsert" }
-vim.cmd.colorscheme("tokyonight-night")
+vim.cmd.colorscheme("tokyonight-moon")
 
-vim.keymap.set({ "n", "i", "v" }, "<C-c>", "<cmd>q<cr>")
-vim.keymap.set({ "n", "i", "v" }, "<C-t>", "<cmd>tabnew<cr>")
+vim.keymap.set({ "n", "i", "v" }, "<C-c>", "<cmd>bdelete<cr>")
 vim.keymap.set({ "n", "i", "v" }, "<F1>", function() Snacks.picker.help() end)
+vim.keymap.set({ "n", "i", "v" }, "<F2>", function() require("persistence").load() end)
+vim.keymap.set({ "n", "i", "v" }, "<F3>", function() require("persistence").select() end)
 vim.keymap.set({ "n", "i", "v" }, "<C-\\>", function() Snacks.picker() end)
 vim.keymap.set({ "n", "i", "v" }, "<C-/>", function() Snacks.explorer.open() end)
 vim.keymap.set({ "n", "i", "v" }, "<C-.>", function() Snacks.picker.files() end)
 vim.keymap.set({ "n", "i", "v" }, "<C-,>", function() Snacks.picker.recent() end)
+vim.keymap.set({ "n", "i", "v" }, "<C-b>", function() Snacks.picker.buffers() end)
 vim.keymap.set({ "n", "i", "v" }, "<C-g>", function() Snacks.lazygit() end)
 vim.keymap.set({ "n", "i", "v" }, "<C-h>", function() Snacks.lazygit.log_file() end)
 vim.keymap.set({ "n", "i", "v" }, "<C-f>", function() Snacks.picker.grep_buffers() end)
@@ -58,3 +60,4 @@ require("lualine").setup({
 		},
 	},
 })
+

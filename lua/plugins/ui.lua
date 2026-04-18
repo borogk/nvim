@@ -33,4 +33,13 @@ return {
 	{ "nvim-lualine/lualine.nvim" },
 	{ "MunifTanjim/nui.nvim" },
 	{ "folke/noice.nvim", opts = {} },
+	{
+		"akinsho/bufferline.nvim",
+		opts = {
+			options = {
+				themable = false,
+				separator_style = "slant",
+			},
+		},
+	},
 }
