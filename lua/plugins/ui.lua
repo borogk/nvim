@@ -28,9 +28,20 @@ return {
 			},
 		},
 	},
-	{ "folke/tokyonight.nvim", lazy = false, priority = 1000 },
+	{	"folke/tokyonight.nvim", lazy = false, priority = 1000	},
 	{ "nvim-tree/nvim-web-devicons" },
-	{ "nvim-lualine/lualine.nvim" },
+	{
+		"nvim-lualine/lualine.nvim",
+		opts = {
+			extensions = {
+				"quickfix",
+				{
+					filetypes = { "snacks_terminal" },
+					sections = { lualine_a = { "mode" } },
+				},
+			},
+		}
+	},
 	{ "MunifTanjim/nui.nvim" },
 	{ "folke/noice.nvim", opts = {} },
 	{
