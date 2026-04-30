@@ -41,6 +41,10 @@ local function search_current_file()
     end
 end
 
+local function search_working_directory()
+   	Snacks.picker.grep()
+end
+
 local function format()
 	if vim.o.filetype == "markdown" then
 		vim.cmd("TableTidyAll")
@@ -79,6 +83,7 @@ vim.keymap.set({ "n", "i", "v" }, "<C-b>", buffers)
 vim.keymap.set({ "n", "i", "v" }, "<C-g>", git)
 vim.keymap.set({ "n", "i", "v" }, "<C-h>", git_file_history)
 vim.keymap.set({ "n", "i", "v" }, "<C-f>", search_current_file)
+vim.keymap.set({ "n", "i", "v" }, "<F3>", search_working_directory)
 vim.keymap.set({ "n", "i", "v" }, "<C-l>", format)
 vim.keymap.set({ "n", "i", "v" }, "<F18>", rename)
 vim.keymap.set({ "n", "i", "v" }, "<F19>", references)
