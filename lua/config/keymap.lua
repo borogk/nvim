@@ -34,8 +34,11 @@ local function git_file_history()
 	Snacks.lazygit.log_file()
 end
 
-local function search()
-	Snacks.picker.grep_buffers()
+local function search_current_file()
+    local current_file = vim.fn.expand("%")
+    if current_file ~= "" then
+    	Snacks.picker.grep({ glob = current_file })
+    end
 end
 
 local function format()
@@ -75,7 +78,7 @@ vim.keymap.set({ "n", "i", "v" }, "<C-,>", recent)
 vim.keymap.set({ "n", "i", "v" }, "<C-b>", buffers)
 vim.keymap.set({ "n", "i", "v" }, "<C-g>", git)
 vim.keymap.set({ "n", "i", "v" }, "<C-h>", git_file_history)
-vim.keymap.set({ "n", "i", "v" }, "<C-f>", search)
+vim.keymap.set({ "n", "i", "v" }, "<C-f>", search_current_file)
 vim.keymap.set({ "n", "i", "v" }, "<C-l>", format)
 vim.keymap.set({ "n", "i", "v" }, "<F18>", rename)
 vim.keymap.set({ "n", "i", "v" }, "<F19>", references)
