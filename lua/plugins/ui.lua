@@ -24,6 +24,12 @@ return {
 							preview = true,
 						},
 					},
+					lsp_references = {
+						auto_confirm = true,
+					},
+					lsp_definitions = {
+						include_current = true,
+					},
 				},
 			},
 		},

@@ -54,6 +54,10 @@ local function references()
 	Snacks.picker.lsp_references()
 end
 
+local function definitions()
+	Snacks.picker.lsp_definitions()
+end
+
 local function code_action()
 	vim.lsp.buf.code_action()
 end
@@ -75,5 +79,6 @@ vim.keymap.set({ "n", "i", "v" }, "<C-f>", search)
 vim.keymap.set({ "n", "i", "v" }, "<C-l>", format)
 vim.keymap.set({ "n", "i", "v" }, "<F18>", rename)
 vim.keymap.set({ "n", "i", "v" }, "<F19>", references)
+vim.keymap.set({ "n", "i", "v" }, "<F20>", definitions)
 vim.keymap.set({ "n", "i", "v" }, "<F24>", code_action)
 vim.keymap.set({ "i" }, "<C-CR>", auto_complete)
