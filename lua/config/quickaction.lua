@@ -77,7 +77,7 @@ function QuickAction(startup)
         elseif item == "toggle_non_printables" then
             vim.cmd("set list!")
         elseif item == "quit" then
-            vim.cmd("qa")
+            vim.cmd("confirm qa")
         end
     end)
 end
