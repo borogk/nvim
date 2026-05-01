@@ -47,6 +47,10 @@ return {
                     sections = { lualine_a = { "mode" } },
                 },
             },
+            options = {
+                section_separators = '',
+                component_separators = '',
+            },
         }
     },
     { "MunifTanjim/nui.nvim" },
