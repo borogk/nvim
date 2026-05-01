@@ -36,6 +36,7 @@ return {
         },
     },
     { "folke/tokyonight.nvim", lazy = false, priority = 1000 },
+    { "catppuccin/nvim", name = "catppuccin", lazy = false, priority = 1000 },
     { "nvim-tree/nvim-web-devicons" },
     {
         "nvim-lualine/lualine.nvim",
