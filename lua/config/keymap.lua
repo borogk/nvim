@@ -44,7 +44,7 @@ local function search_current_file()
 end
 
 local function search_working_directory()
-       Snacks.picker.grep()
+    Snacks.picker.grep()
 end
 
 local function format()
