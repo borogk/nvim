@@ -50,7 +50,6 @@ return {
         }
     },
     { "MunifTanjim/nui.nvim" },
-    { "folke/noice.nvim", opts = {} },
     {
         "akinsho/bufferline.nvim",
         opts = {

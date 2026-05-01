@@ -8,5 +8,6 @@ return {
                 ['`'] = false,
             },
         }
-    }
+    },
+    { "nvim-mini/mini.cmdline", opts = {} }
 }
