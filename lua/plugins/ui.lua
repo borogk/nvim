@@ -18,6 +18,7 @@ return {
                 sources = {
                     explorer = {
                         hidden = true,
+                        ignored = true,
                         auto_close = true,
                         layout = {
                             preset = "default",
