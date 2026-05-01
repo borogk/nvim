@@ -4,8 +4,8 @@ local startup_items = {
     "recent",
 }
 
-local all_items = {
-    "restore_session",
+local regular_items = {
+    "save_session",
     "switch_session",
     "recent",
     "clear_highlight",
@@ -15,7 +15,7 @@ local all_items = {
 }
 
 function QuickAction(startup)
-    local items = all_items
+    local items = regular_items
     if startup == true then
         items = startup_items
     end
@@ -25,10 +25,18 @@ function QuickAction(startup)
         format_item = function(item)
             if item == "restore_session" then
                 return "Restore session (" .. vim.fn.getcwd() .. ")"
+            elseif item == "save_session" then
+                local num_buffers = 0
+                for _, id in pairs(vim.api.nvim_list_bufs()) do
+                    if vim.api.nvim_buf_get_option(id, "buflisted") then
+                        num_buffers = num_buffers + 1
+                    end
+                end
+                return "Save session (" .. tostring(num_buffers) .. " buffer(s), " .. vim.fn.getcwd() .. ")"
             elseif item == "switch_session" then
                 return "Switch session..."
             elseif item == "recent" then
-                return "Recent..."
+                return "Recent files..."
             elseif item == "clear_highlight" then
                 return "Clear highlight"
             elseif item == "toggle_explorer" then
@@ -42,6 +50,8 @@ function QuickAction(startup)
     }, function(item)
         if item == "restore_session" then
             vim.cmd("AutoSession restore")
+        elseif item == "save_session" then
+            vim.cmd("AutoSession save")
         elseif item == "switch_session" then
             vim.cmd("AutoSession search")
         elseif item == "recent" then
