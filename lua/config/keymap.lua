@@ -1,3 +1,5 @@
+require("config.quickaction")
+
 local function close_buffer()
     vim.cmd("bd")
 end
@@ -88,5 +90,6 @@ vim.keymap.set({ "n", "i", "v" }, "<C-l>", format)
 vim.keymap.set({ "n", "i", "v" }, "<F18>", rename)
 vim.keymap.set({ "n", "i", "v" }, "<F19>", references)
 vim.keymap.set({ "n", "i", "v" }, "<F20>", definitions)
+vim.keymap.set({ "n", "i", "v" }, "<F12>", QuickAction)
 vim.keymap.set({ "n", "i", "v" }, "<F24>", code_action)
 vim.keymap.set({ "i" }, "<C-CR>", auto_complete)

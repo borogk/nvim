@@ -1,5 +1,7 @@
 return {
     "rmagatti/auto-session",
     lazy = false,
-    opts = {},
+    opts = {
+        auto_restore = false,
+    },
 }
