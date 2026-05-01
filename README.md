@@ -32,11 +32,13 @@ After installing, configure your terminal of choice to use one of the fonts that
 
 Here are some quick steps to get [Kitty terminal](https://sw.kovidgoyal.net/kitty/) up to speed:
 
-1. Run `kitten choose-fonts` to configure terminal font (one of the Nerd Fonts is recommended).
-2. Run `kitten themes` to configure a theme.
+1. Run `kitten choose-fonts` to configure terminal font (current preference `RobotoMono Nerd Font`).
+2. Run `kitten themes` to configure a theme (current preference `Catppuccin-Mocha`, [download separately here](https://github.com/catppuccin/kitty/blob/main/themes/mocha.conf)).
 3. Append custom settings into `~/.config/kitty/kitty.conf`:
 
 ```
+font_size               13.0
+
 linux_display_server    x11
 enabled_layouts         fat,horizontal
 
