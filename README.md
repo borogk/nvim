@@ -28,6 +28,26 @@ cd nerd-fonts
 
 After installing, configure your terminal of choice to use one of the fonts that has "Nerd Font" in the name.
 
+## Kitty
+
+Here are some quick steps to get [Kitty terminal](https://sw.kovidgoyal.net/kitty/) up to speed:
+
+1. Run `kitten choose-fonts` to configure terminal font (one of the Nerd Fonts is recommended).
+2. Run `kitten themes` to configure a theme.
+3. Append custom settings into `~/.config/kitty/kitty.conf`:
+
+```
+linux_display_server    x11
+enabled_layouts         fat,horizontal
+
+map kitty_mod+t         launch --cwd=current --type=tab --location=neighbor
+map cmd+t               launch --cwd=current --type=tab --location=neighbor
+map kitty_mod+enter     launch --cwd=current
+map cmd+enter           launch --cwd=current
+map kitty_mod+d         detach_window ask
+map kitty_mod+m         move_window
+```
+
 ## LSP
 
 Although the necessary plugins for LSP are included in this repo, LSP servers must be installed separately via Mason.
