@@ -2,6 +2,7 @@ local startup_items = {
     "restore_session",
     "switch_session",
     "recent",
+    "quit",
 }
 
 local regular_items = {
@@ -12,6 +13,7 @@ local regular_items = {
     "toggle_explorer",
     "toggle_wrap",
     "toggle_non_printables",
+    "quit",
 }
 
 function QuickAction(startup)
@@ -45,6 +47,10 @@ function QuickAction(startup)
                 return "Toggle wrap"
             elseif item == "toggle_non_printables" then
                 return "Toggle non-printable characters"
+            elseif item == "quit" then
+                return "Quit"
+            else
+                return item
             end
         end
     }, function(item)
@@ -70,6 +76,8 @@ function QuickAction(startup)
             vim.cmd("set wrap!")
         elseif item == "toggle_non_printables" then
             vim.cmd("set list!")
+        elseif item == "quit" then
+            vim.cmd("qa")
         end
     end)
 end
