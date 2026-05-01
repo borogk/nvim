@@ -1,3 +1,15 @@
+require("config.quickaction")
+
+-- Startup after all plugins are initialized
+vim.api.nvim_create_autocmd("User", {
+    pattern = "LazyVimStarted",
+    callback = function()
+        if vim.fn.argc() == 0 then
+            QuickAction(true)
+        end
+    end
+})
+
 -- Setup autocompletion
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
