@@ -8,6 +8,16 @@ local function help()
     Snacks.picker.help()
 end
 
+local function explorer_panel()
+    Snacks.explorer({
+        auto_close = false,
+        layout = {
+            preset = "left",
+            preview = false,
+        },
+    })
+end
+
 local function pickers()
     Snacks.picker()
 end
@@ -105,6 +115,7 @@ end
 
 vim.keymap.set({ "n", "i", "v" }, "<C-c>", close_buffer)
 vim.keymap.set({ "n", "i", "v" }, "<F1>", help)
+vim.keymap.set({ "n", "i", "v" }, "<F2>", explorer_panel)
 vim.keymap.set({ "n", "i", "v" }, "<C-\\>", pickers)
 vim.keymap.set({ "n", "i", "v" }, "<C-/>", explorer)
 vim.keymap.set({ "n", "i", "v" }, "<C-.>", files)

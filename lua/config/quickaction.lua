@@ -9,6 +9,7 @@ local main_items = {
     "session_menu",
     "editor_menu",
     "dap_menu",
+    "explorer_panel",
     "quit",
 }
 
@@ -107,7 +108,7 @@ local definitions = {
     },
     explorer_panel = {
         title = function()
-            return "Toggle explorer panel"
+            return "Explorer panel"
         end,
         action = function()
             Snacks.explorer({
