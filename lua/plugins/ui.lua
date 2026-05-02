@@ -44,8 +44,17 @@ return {
             extensions = {
                 "quickfix",
                 {
-                    filetypes = { "snacks_terminal" },
-                    sections = { lualine_a = { "mode" } },
+                    filetypes = { 
+                        "snacks_terminal",
+                        "dapui_stacks",
+                        "dapui_scopes",
+                        "dapui_watches",
+                        "dap-repl",
+                    },
+                    sections = {
+                        lualine_a = { "mode" },
+                        lualine_c = { "filename" },
+                    },
                 },
             },
             options = {

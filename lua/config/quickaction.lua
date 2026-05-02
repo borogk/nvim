@@ -5,17 +5,42 @@ local startup_items = {
     "quit",
 }
 
-local regular_items = {
-    "save_session",
+local main_items = {
+    "session_menu",
+    "editor_menu",
+    "dap_menu",
+    "quit",
+}
+
+local session_items = {
+    "save_session_and_quit",
+    "restore_session",
     "switch_session",
     "recent",
+    "back",
+}
+
+local editor_items = {
     "clear_highlight",
     "undo_history",
     "toggle_explorer",
     "toggle_wrap",
     "toggle_non_printables",
-    "quit",
+    "back",
 }
+
+local dap_items = {
+    "dap_ui",
+    "dap_new",
+    "dap_terminate",
+    "dap_continue",
+    "dap_step_over",
+    "dap_step_into",
+    "dap_step_out",
+    "back",
+}
+
+local menu
 
 local function pluralize_noun(count, noun, ending)
     if count == 1 then
@@ -25,70 +50,67 @@ local function pluralize_noun(count, noun, ending)
     end
 end
 
-local function enabled_text(enabled)
-    if enabled then
-        return "ON"
-    else
-        return "off"
-    end
-end
-
-function QuickAction(startup)
-    local items = regular_items
-    if startup == true then
-        items = startup_items
-    end
-
-    local wrap_enabled = vim.o.wrap
-    local non_printables_enabled = vim.o.list
-
-    Snacks.picker.select(items, {
-        prompt = "Quick action:",
-        format_item = function(item)
-            if item == "restore_session" then
-                return "Restore session (" .. vim.fn.getcwd() .. ")"
-            elseif item == "save_session" then
-                local num_buffers = 0
-                for _, id in pairs(vim.api.nvim_list_bufs()) do
-                    if vim.api.nvim_buf_get_option(id, "buflisted") then
-                        num_buffers = num_buffers + 1
-                    end
-                end
-                return "Save session (" .. vim.fn.getcwd() .. ", " .. pluralize_noun(num_buffers, "buffer", "s") .. ")"
-            elseif item == "switch_session" then
-                return "Switch session..."
-            elseif item == "recent" then
-                return "Recent files..."
-            elseif item == "clear_highlight" then
-                return "Clear highlight"
-            elseif item == "undo_history" then
-                return "Undo history..."
-            elseif item == "toggle_explorer" then
-                return "Toggle explorer panel"
-            elseif item == "toggle_wrap" then
-                return "Toggle wrap (currently " .. enabled_text(wrap_enabled) .. ")"
-            elseif item == "toggle_non_printables" then
-                return "Toggle non-printable characters (currently " .. enabled_text(non_printables_enabled) .. ")"
-            elseif item == "quit" then
-                return "Quit"
-            else
-                return item
-            end
-        end
-    }, function(item)
-        if item == "restore_session" then
+local definitions = {
+    restore_session = {
+        title = function()
+            return "Restore session (" .. vim.fn.getcwd() .. ")"
+        end,
+        action = function()
             vim.cmd("AutoSession restore")
-        elseif item == "save_session" then
-            vim.cmd("AutoSession save")
-        elseif item == "switch_session" then
+        end,
+    },
+    switch_session = {
+        title = function()
+            return "Switch session..."
+        end,
+        action = function()
             vim.cmd("AutoSession search")
-        elseif item == "recent" then
+        end,
+    },
+    save_session_and_quit = {
+        title = function()
+            local num_buffers = 0
+            for _, id in pairs(vim.api.nvim_list_bufs()) do
+                if vim.api.nvim_buf_get_option(id, "buflisted") then
+                    num_buffers = num_buffers + 1
+                end
+            end
+            return "Save session and quit (" .. vim.fn.getcwd() .. ", " .. pluralize_noun(num_buffers, "buffer", "s")
+        end,
+        action = function()
+            vim.cmd("AutoSession save")
+            vim.cmd("confirm qa")
+        end,
+    },
+    recent = {
+        title = function()
+            return "Recent files..."
+        end,
+        action = function()
             Snacks.picker.recent()
-        elseif item == "clear_highlight" then
+        end,
+    },
+    clear_highlight = {
+        title = function()
+            return "Clear highlight"
+        end,
+        action = function()
             vim.cmd("noh")
-        elseif item == "undo_history" then
+        end,
+    },
+    undo_history = {
+        title = function()
+            return "Undo history..."
+        end,
+        action = function()
             Snacks.picker.undo()
-        elseif item == "toggle_explorer" then
+        end,
+    },
+    explorer_panel = {
+        title = function()
+            return "Toggle explorer panel"
+        end,
+        action = function()
             Snacks.explorer({
                 auto_close = false,
                 layout = {
@@ -96,12 +118,149 @@ function QuickAction(startup)
                     preview = false,
                 },
             })
-        elseif item == "toggle_wrap" then
+        end,
+    },
+    toggle_wrap = {
+        title = function()
+            return "Toggle wrap"
+        end,
+        action = function()
             vim.cmd("set wrap!")
-        elseif item == "toggle_non_printables" then
+        end,
+    },
+    toggle_non_printables = {
+        title = function()
+            return "Toggle non-printable characters"
+        end,
+        action = function()
             vim.cmd("set list!")
-        elseif item == "quit" then
+        end,
+    },
+    dap_ui = {
+        title = function()
+            return "DAP UI"
+        end,
+        action = function()
+            require("dapui").toggle()
+        end,
+    },
+    dap_new = {
+        title = function()
+            return " New session..."
+        end,
+        action = function()
+            vim.cmd("DapNew")
+        end,
+    },
+    dap_terminate = {
+        title = function()
+            return " Terminate"
+        end,
+        action = function()
+            vim.cmd("DapTerminate")
+        end,
+    },
+    dap_continue = {
+        title = function()
+            return " Continue"
+        end,
+        action = function()
+            vim.cmd("DapContinue")
+        end,
+    },
+    dap_step_over = {
+        title = function()
+            return " Step over"
+        end,
+        action = function()
+            vim.cmd("DapStepOver")
+        end,
+    },
+    dap_step_into = {
+        title = function()
+            return " Step into"
+        end,
+        action = function()
+            vim.cmd("DapStepInto")
+        end,
+    },
+    dap_step_out = {
+        title = function()
+            return " Step out"
+        end,
+        action = function()
+            vim.cmd("DapStepOut")
+        end,
+    },
+    quit = {
+        title = function()
+            return "Quit"
+        end,
+        action = function()
             vim.cmd("confirm qa")
+        end,
+    },
+    session_menu = {
+        title = function()
+            return "Session     >"
+        end,
+        action = function()
+            menu("Session actions:", session_items)
+        end,
+    },
+    editor_menu = {
+        title = function()
+            return "Editor      >"
+        end,
+        action = function()
+            menu("Editor actions:", editor_items)
+        end,
+    },
+    dap_menu = {
+        title = function()
+            return "Debug       >"
+        end,
+        action = function()
+            menu("Debug actions:", dap_items)
+        end,
+    },
+    back = {
+        title = function()
+            return "< Back"
+        end,
+        action = function()
+            menu("Quick actions:", main_items)
+        end,
+    }
+}
+
+function menu(title, items)
+    Snacks.picker.select(
+        items,
+        {
+            prompt = title,
+            format_item = function(item)
+                local def = definitions[item]
+                if def ~= nil then
+                    return def.title(vim.o)
+                else
+                    return item
+                end
+            end
+        },
+        function(item)
+            local def = definitions[item]
+            if def ~= nil then
+                def.action(vim.o)
+            end
         end
-    end)
+    )
+end
+
+function QuickAction(startup)
+    if startup == true then
+        menu("Startup quick action:", startup_items)
+    else
+        menu("Quick action:", main_items)
+    end
 end
