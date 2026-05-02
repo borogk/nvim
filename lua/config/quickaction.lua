@@ -14,7 +14,6 @@ local main_items = {
 
 local session_items = {
     "save_session_and_quit",
-    "restore_session",
     "switch_session",
     "recent",
     "back",
@@ -75,7 +74,7 @@ local definitions = {
                     num_buffers = num_buffers + 1
                 end
             end
-            return "Save session and quit (" .. vim.fn.getcwd() .. ", " .. pluralize_noun(num_buffers, "buffer", "s")
+            return "Save session and quit (" .. pluralize_noun(num_buffers, "buffer", "s") .. ")"
         end,
         action = function()
             vim.cmd("AutoSession save")
@@ -138,7 +137,7 @@ local definitions = {
     },
     dap_ui = {
         title = function()
-            return "DAP UI"
+            return "Toggle debug UI"
         end,
         action = function()
             require("dapui").toggle()
@@ -146,7 +145,7 @@ local definitions = {
     },
     dap_new = {
         title = function()
-            return " New session..."
+            return " Start debugging..."
         end,
         action = function()
             vim.cmd("DapNew")
@@ -205,7 +204,7 @@ local definitions = {
             return "Session     >"
         end,
         action = function()
-            menu("Session actions:", session_items)
+            menu("Session actions (" .. vim.fn.getcwd() .. ")", session_items)
         end,
     },
     editor_menu = {
@@ -213,7 +212,7 @@ local definitions = {
             return "Editor      >"
         end,
         action = function()
-            menu("Editor actions:", editor_items)
+            menu("Editor actions", editor_items)
         end,
     },
     dap_menu = {
@@ -221,7 +220,7 @@ local definitions = {
             return "Debug       >"
         end,
         action = function()
-            menu("Debug actions:", dap_items)
+            menu("Debug actions", dap_items)
         end,
     },
     back = {
@@ -229,7 +228,7 @@ local definitions = {
             return "< Back"
         end,
         action = function()
-            menu("Quick actions:", main_items)
+            menu("Quick actions", main_items)
         end,
     }
 }
@@ -259,8 +258,8 @@ end
 
 function QuickAction(startup)
     if startup == true then
-        menu("Startup quick action:", startup_items)
+        menu("Startup quick action", startup_items)
     else
-        menu("Quick action:", main_items)
+        menu("Quick action", main_items)
     end
 end
