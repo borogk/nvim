@@ -4,7 +4,7 @@ require("config.quickaction")
 vim.api.nvim_create_autocmd("User", {
     pattern = "LazyVimStarted",
     callback = function()
-        if vim.fn.argc() == 0 then
+        if vim.fn.argc() == 0 and vim.fn.has("ttyin") == 1 then
             QuickAction(true)
         end
     end
