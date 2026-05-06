@@ -57,18 +57,6 @@ Although the necessary plugins for LSP are included in this repo, LSP servers mu
 Run `:Mason` command to bring up Mason UI with a list of implementations for various languages.
 Press `g?` for help with what button to press to install/update etc.
 
-## jdtls
-
-[Eclipse jdtls](https://github.com/eclipse-jdtls/eclipse.jdt.ls) is an LSP implementation for Java.
-
-It should be auto-installed via Mason upon the first nvim launch.
-
-Mason downloads jdtls alongside Lombok, which should be enabled by setting global env variable:
-
-```sh
-export JDTLS_JVM_ARGS="-javaagent:$HOME/.local/share/nvim/mason/packages/jdtls/lombok.jar"
-```
-
 ## lazygit + delta
 
 Install [lazygit](https://github.com/jesseduffield/lazygit?tab=readme-ov-file#installation) to enable fancy git interface.

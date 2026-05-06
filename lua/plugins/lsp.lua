@@ -9,7 +9,6 @@ return {
                 "clangd",
                 "gopls",
                 "yamlls",
-                "jdtls",
                 "elp",
             },
         },
