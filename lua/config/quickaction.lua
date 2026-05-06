@@ -23,7 +23,6 @@ local session_items = {
 local editor_items = {
     "clear_highlight",
     "undo_history",
-    "toggle_explorer",
     "toggle_wrap",
     "toggle_non_printables",
     "back",
