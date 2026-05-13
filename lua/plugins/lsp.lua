@@ -10,6 +10,7 @@ return {
                 "gopls",
                 "yamlls",
                 "elp",
+                "ts_ls",
             },
         },
     },
