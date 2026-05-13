@@ -15,17 +15,16 @@ local main_items = {
 
 local session_items = {
     "save_session_and_quit",
+    "save_session",
     "switch_session",
     "recent",
-    "back",
 }
 
 local editor_items = {
     "clear_highlight",
-    "undo_history",
     "toggle_wrap",
     "toggle_non_printables",
-    "back",
+    "undo_history",
 }
 
 local dap_items = {
@@ -36,7 +35,6 @@ local dap_items = {
     "dap_step_over",
     "dap_step_into",
     "dap_step_out",
-    "back",
 }
 
 local menu
@@ -64,6 +62,14 @@ local definitions = {
         end,
         action = function()
             vim.cmd("AutoSession search")
+        end,
+    },
+    save_session = {
+        title = function()
+            return "Save session"
+        end,
+        action = function()
+            vim.cmd("AutoSession save")
         end,
     },
     save_session_and_quit = {
@@ -223,14 +229,6 @@ local definitions = {
             menu("Debug actions", dap_items)
         end,
     },
-    back = {
-        title = function()
-            return "< Back"
-        end,
-        action = function()
-            menu("Quick actions", main_items)
-        end,
-    }
 }
 
 function menu(title, items)
