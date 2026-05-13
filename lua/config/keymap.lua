@@ -85,10 +85,6 @@ local function auto_complete()
     vim.lsp.completion.get()
 end
 
-local function dap_new()
-    vim.cmd("DapNew")
-end
-
 local function dap_step_over()
     vim.cmd("DapStepOver")
 end
