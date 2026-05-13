@@ -163,6 +163,7 @@ local definitions = {
         end,
         action = function()
             vim.cmd("DapTerminate")
+            require("dapui").close()
         end,
     },
     dap_continue = {

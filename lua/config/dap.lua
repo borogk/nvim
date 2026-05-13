@@ -36,6 +36,9 @@ dap.listeners.before.event_exited.dapui_config = function()
     dapui.close()
 end
 
+-- Log level
+dap.set_log_level("TRACE")
+
 -- Go
 
 dap.adapters.delve = function(callback)
@@ -58,3 +61,12 @@ dap.configurations.go = {
         mode = "remote",
     },
 }
+
+-- Erlang
+
+dap.adapters.edb = {
+    type = "executable",
+    command = "edb",
+    args = { "dap" },
+}
+

@@ -92,3 +92,35 @@ dlv --listen=:2345 --headless debug
 ```
 
 Full details can be looked up in the [usage documentation](https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv.md).
+
+## edb
+
+Install [edb](https://github.com/WhatsApp/edb) and add it to PATH to enable OTP/Erlang debugging.
+
+Sample command to start an OTP node with debugging enabled:
+
+```sh
+# Debugger can only connect via longnames (node@host), therefore specifying -name is preferred over -sname
+# Additionally, +D argument is crucial to enable debugging
+erl -pa codepath -name test@localhost -setcookie test +D
+```
+
+Corresponding DAP configuration to attach debugger to above node (can be added to workspace's `.nvim.lua`):
+
+```lua
+local dap = require("dap")
+
+dap.configurations.erlang = {
+    {
+        type = "edb",
+        request = "attach",
+        name = "Attach to test",
+        config = {
+            node = "test@localhost",
+            cookie = "test",
+            cwd = "${workspaceFolder}",
+        }
+    }
+}
+```
+

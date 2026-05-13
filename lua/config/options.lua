@@ -8,5 +8,6 @@ vim.o.clipboard = "unnamedplus"
 vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.title = true
+vim.o.exrc = true
 vim.opt.completeopt = { "menuone", "popup", "noinsert" }
 vim.cmd.colorscheme("catppuccin-mocha")
