@@ -77,3 +77,18 @@ git:
 
 Install [fd](https://github.com/sharkdp/fd?tab=readme-ov-file#installation) to enable quick file search in explorer picker.
 
+## delve
+
+Install [delve](https://github.com/go-delve/delve/tree/master/Documentation/installation) to enable Go debugging:
+
+```sh
+go install github.com/go-delve/delve/cmd/dlv@latest
+```
+
+Sample command that builds and starts an app with debug server ready to be attached:
+
+```sh
+dlv --listen=:2345 --headless debug
+```
+
+Full details can be looked up in the [usage documentation](https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv.md).
