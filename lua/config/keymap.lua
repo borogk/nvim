@@ -89,24 +89,12 @@ local function dap_new()
     vim.cmd("DapNew")
 end
 
-local function dap_terminate()
-    vim.cmd("DapTerminate")
-end
-
-local function dap_continue()
-    vim.cmd("DapContinue")
-end
-
 local function dap_step_over()
     vim.cmd("DapStepOver")
 end
 
-local function dap_step_into()
-    vim.cmd("DapStepInto")
-end
-
-local function dap_step_out()
-    vim.cmd("DapStepOut")
+local function dap_continue()
+    vim.cmd("DapContinue")
 end
 
 local function dap_toggle_breakpoint()
@@ -128,13 +116,11 @@ vim.keymap.set({ "n", "i", "v" }, "<F3>", search_working_directory)
 vim.keymap.set({ "n", "i", "v" }, "<C-l>", format)
 vim.keymap.set({ "n", "i", "v" }, "<F18>", rename)
 vim.keymap.set({ "n", "i", "v" }, "<F19>", references)
+vim.keymap.set({ "n", "i", "v" }, "<F7>", definitions)
 vim.keymap.set({ "n", "i", "v" }, "<F12>", QuickAction)
 vim.keymap.set({ "n", "i", "v" }, "<F24>", code_action)
 vim.keymap.set({ "i" }, "<C-CR>", auto_complete)
-vim.keymap.set({ "n", "i", "v" }, "<F5>", dap_new)
-vim.keymap.set({ "n", "i", "v" }, "<F17>", dap_terminate)
-vim.keymap.set({ "n", "i", "v" }, "<F9>", dap_continue)
+vim.keymap.set({ "n", "i", "v" }, "<F5>", DebugAction)
 vim.keymap.set({ "n", "i", "v" }, "<F8>", dap_step_over)
-vim.keymap.set({ "n", "i", "v" }, "<F7>", dap_step_into)
-vim.keymap.set({ "n", "i", "v" }, "<F20>", dap_step_out)
+vim.keymap.set({ "n", "i", "v" }, "<F9>", dap_continue)
 vim.keymap.set({ "n", "i", "v" }, "<F32>", dap_toggle_breakpoint)

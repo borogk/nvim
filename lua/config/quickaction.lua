@@ -28,13 +28,13 @@ local editor_items = {
 }
 
 local dap_items = {
-    "dap_ui",
     "dap_new",
     "dap_terminate",
     "dap_continue",
     "dap_step_over",
     "dap_step_into",
     "dap_step_out",
+    "dap_ui",
 }
 
 local menu
@@ -261,3 +261,8 @@ function QuickAction(startup)
         menu("Quick action", main_items)
     end
 end
+
+function DebugAction()
+    menu("Debug actions", dap_items)
+end
+
