@@ -77,26 +77,6 @@ function M.search_git()
     Snacks.picker.git_grep()
 end
 
-function M.search_buffer()
-    vim.ui.input({ prompt = "Search: " }, function(term)
-        if term ~= "" and term ~= nil then
-            vim.cmd("/" .. term)
-        end
-    end)
-end
-
-function M.search_and_replace_buffer()
-    vim.ui.input({ prompt = "Search: " }, function(term)
-        if term ~= "" and term ~= nil then
-            vim.ui.input({ prompt = "Replace: ", default = term }, function(replacement)
-                if replacement ~= nil then
-                    vim.cmd("%s/" .. term .. "/" .. replacement .. "/g")
-                end
-            end)
-        end
-    end)
-end
-
 function M.format()
     if vim.o.filetype == "markdown" then
         vim.cmd("TableTidyAll")
