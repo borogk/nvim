@@ -144,6 +144,7 @@ local function close_unlisted_buffers()
             vim.cmd("silent! bd " .. tostring(id))
         end
     end
+    vim.cmd("silent! cclose")
 end
 
 vim.keymap.set({ "n", "i", "v" }, "<C-c>", close_buffer)
