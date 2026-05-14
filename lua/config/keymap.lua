@@ -42,6 +42,14 @@ local function symbols()
     Snacks.picker.lsp_symbols()
 end
 
+local function diagnostics()
+    Snacks.picker.diagnostics_buffer()
+end
+
+local function notifications()
+    Snacks.picker.notifications()
+end
+
 local function quickfix()
     Snacks.picker.qflist()
 end
@@ -137,6 +145,8 @@ vim.keymap.set({ "n", "i", "v" }, "<C-.>", files)
 vim.keymap.set({ "n", "i", "v" }, "<C-,>", recent)
 vim.keymap.set({ "n", "i", "v" }, "<C-b>", buffers)
 vim.keymap.set({ "n", "i", "v" }, "<C-s>", symbols)
+vim.keymap.set({ "n", "i", "v" }, "<C-n>", notifications)
+vim.keymap.set({ "n", "i", "v" }, "<C-d>", diagnostics)
 vim.keymap.set({ "n", "i", "v" }, "<C-q>", quickfix)
 vim.keymap.set({ "n", "i", "v" }, "<C-g>", git)
 vim.keymap.set({ "n", "i", "v" }, "<C-h>", git_file_history)
@@ -156,8 +166,8 @@ vim.keymap.set({ "n", "i", "v" }, "<F8>", dap_step_over)
 vim.keymap.set({ "n", "i", "v" }, "<F32>", dap_toggle_breakpoint)
 vim.keymap.set({ "n", "i", "v" }, "<F9>", dap_continue)
 vim.keymap.set({ "n", "i", "v" }, "<F12>", QuickAction)
-vim.keymap.set({ "n" }, "<S-CR>", definitions)
-vim.keymap.set({ "n" }, "<C-CR>", references)
+vim.keymap.set({ "n" }, "<C-CR>", definitions)
+vim.keymap.set({ "n" }, "<S-CR>", references)
 vim.keymap.set({ "i" }, "<C-CR>", auto_complete)
 vim.keymap.set({ "n" }, "{", quickfix_prev)
 vim.keymap.set({ "n" }, "}", quickfix_next)
