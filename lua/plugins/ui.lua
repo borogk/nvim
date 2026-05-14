@@ -25,8 +25,12 @@ return {
                             preview = true,
                         },
                     },
+                    buffers = {
+                        sort_lastused = false,
+                    },
                     lsp_references = {
                         auto_confirm = true,
+                        include_current = true,
                     },
                     lsp_definitions = {
                         include_current = true,

@@ -138,6 +138,14 @@ local function dap_toggle_breakpoint()
     vim.cmd("DapToggleBreakpoint")
 end
 
+local function close_unlisted_buffers()
+    for _, id in pairs(vim.api.nvim_list_bufs()) do
+        if not vim.api.nvim_buf_get_option(id, "buflisted") then
+            vim.cmd("silent! bd " .. tostring(id))
+        end
+    end
+end
+
 vim.keymap.set({ "n", "i", "v" }, "<C-c>", close_buffer)
 vim.keymap.set({ "n", "i", "v" }, "<C-\\>", pickers)
 vim.keymap.set({ "n", "i", "v" }, "<C-/>", explorer)
@@ -165,6 +173,7 @@ vim.keymap.set({ "n", "i", "v" }, "<F19>", references)
 vim.keymap.set({ "n", "i", "v" }, "<F8>", dap_step_over)
 vim.keymap.set({ "n", "i", "v" }, "<F32>", dap_toggle_breakpoint)
 vim.keymap.set({ "n", "i", "v" }, "<F9>", dap_continue)
+vim.keymap.set({ "n", "i", "v" }, "<F11>", close_unlisted_buffers)
 vim.keymap.set({ "n", "i", "v" }, "<F12>", QuickAction)
 vim.keymap.set({ "n" }, "<C-CR>", definitions)
 vim.keymap.set({ "n" }, "<S-CR>", references)
