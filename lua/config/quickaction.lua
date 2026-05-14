@@ -34,6 +34,7 @@ local dap_items = {
     "dap_step_over",
     "dap_step_into",
     "dap_step_out",
+    "dap_log",
     "dap_ui",
 }
 
@@ -143,7 +144,7 @@ local definitions = {
     },
     dap_ui = {
         title = function()
-            return "Toggle debug UI"
+            return "Toggle DAP UI"
         end,
         action = function()
             require("dapui").toggle()
@@ -196,6 +197,14 @@ local definitions = {
         end,
         action = function()
             vim.cmd("DapStepOut")
+        end,
+    },
+    dap_log = {
+        title = function()
+            return "Show DAP log"
+        end,
+        action = function()
+            vim.cmd("DapShowLog")
         end,
     },
     quit = {
