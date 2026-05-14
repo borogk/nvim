@@ -42,6 +42,10 @@ local function symbols()
     Snacks.picker.lsp_symbols()
 end
 
+local function quickfix()
+    Snacks.picker.qflist()
+end
+
 local function git()
     Snacks.lazygit()
 end
@@ -50,15 +54,32 @@ local function git_file_history()
     Snacks.lazygit.log_file()
 end
 
-local function search_current_file()
-    local current_file = vim.fn.expand("%")
-    if current_file ~= "" then
-        Snacks.picker.grep({ glob = current_file })
-    end
-end
-
 local function search_working_directory()
     Snacks.picker.grep()
+end
+
+local function search_git()
+    Snacks.picker.git_grep()
+end
+
+local function search_buffer()
+    vim.ui.input({ prompt = "Search: " }, function(term)
+        if term ~= "" and term ~= nil then
+            vim.cmd("/" .. term)
+        end
+    end)
+end
+
+local function search_and_replace_buffer()
+    vim.ui.input({ prompt = "Search: " }, function(term)
+        if term ~= "" and term ~= nil then
+            vim.ui.input({ prompt = "Replace: ", default = term }, function(replacement)
+                if replacement ~= nil then
+                    vim.cmd("%s/" .. term .. "/" .. replacement .. "/g")
+                end
+            end)
+        end
+    end)
 end
 
 local function format()
@@ -67,6 +88,14 @@ local function format()
     else
         vim.lsp.buf.format()
     end
+end
+
+local function quickfix_prev()
+    vim.cmd("silent! cp")
+end
+
+local function quickfix_next()
+    vim.cmd("silent! cn")
 end
 
 local function rename()
@@ -108,13 +137,16 @@ vim.keymap.set({ "n", "i", "v" }, "<C-.>", files)
 vim.keymap.set({ "n", "i", "v" }, "<C-,>", recent)
 vim.keymap.set({ "n", "i", "v" }, "<C-b>", buffers)
 vim.keymap.set({ "n", "i", "v" }, "<C-s>", symbols)
+vim.keymap.set({ "n", "i", "v" }, "<C-q>", quickfix)
 vim.keymap.set({ "n", "i", "v" }, "<C-g>", git)
 vim.keymap.set({ "n", "i", "v" }, "<C-h>", git_file_history)
-vim.keymap.set({ "n", "i", "v" }, "<C-f>", search_current_file)
 vim.keymap.set({ "n", "i", "v" }, "<C-l>", format)
+vim.keymap.set({ "n", "i", "v" }, "<C-f>", search_buffer)
+vim.keymap.set({ "n", "i", "v" }, "<C-r>", search_and_replace_buffer)
 vim.keymap.set({ "n", "i", "v" }, "<F1>", help)
 vim.keymap.set({ "n", "i", "v" }, "<F2>", explorer_panel)
 vim.keymap.set({ "n", "i", "v" }, "<F3>", search_working_directory)
+vim.keymap.set({ "n", "i", "v" }, "<F15>", search_git)
 vim.keymap.set({ "n", "i", "v" }, "<F5>", DebugAction)
 vim.keymap.set({ "n", "i", "v" }, "<F6>", code_action)
 vim.keymap.set({ "n", "i", "v" }, "<F18>", rename)
@@ -124,6 +156,8 @@ vim.keymap.set({ "n", "i", "v" }, "<F8>", dap_step_over)
 vim.keymap.set({ "n", "i", "v" }, "<F32>", dap_toggle_breakpoint)
 vim.keymap.set({ "n", "i", "v" }, "<F9>", dap_continue)
 vim.keymap.set({ "n", "i", "v" }, "<F12>", QuickAction)
-vim.keymap.set({ "n" }, "<CR>", definitions)
+vim.keymap.set({ "n" }, "<S-CR>", definitions)
 vim.keymap.set({ "n" }, "<C-CR>", references)
 vim.keymap.set({ "i" }, "<C-CR>", auto_complete)
+vim.keymap.set({ "n" }, "{", quickfix_prev)
+vim.keymap.set({ "n" }, "}", quickfix_next)
