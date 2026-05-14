@@ -44,7 +44,7 @@ return {
             extensions = {
                 "quickfix",
                 {
-                    filetypes = { 
+                    filetypes = {
                         "snacks_terminal",
                         "dapui_stacks",
                         "dapui_scopes",
@@ -58,8 +58,8 @@ return {
                 },
             },
             options = {
-                section_separators = '',
-                component_separators = '',
+                section_separators = "",
+                component_separators = "",
             },
         }
     },
