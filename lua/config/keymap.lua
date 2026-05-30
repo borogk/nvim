@@ -33,3 +33,16 @@ vim.keymap.set({ "n" }, "<S-CR>", actions.references)
 vim.keymap.set({ "i" }, "<C-CR>", actions.auto_complete)
 vim.keymap.set({ "n" }, "{", actions.quickfix_prev)
 vim.keymap.set({ "n" }, "}", actions.quickfix_next)
+
+local function setup_shift_selection(dir)
+    vim.keymap.set({ "n" }, "<S-" .. dir .. ">", function() vim.fn.feedkeys(vim.api.nvim_replace_termcodes("v<" .. dir .. ">", true, true, true)) end)
+    vim.keymap.set({ "i" }, "<S-" .. dir .. ">", function() vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-o>v<" .. dir .. ">", true, true, true)) end)
+    vim.keymap.set({ "v" }, "<S-" .. dir .. ">", function() vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<" .. dir .. ">", true, true, true)) end)
+end
+
+setup_shift_selection("Up")
+setup_shift_selection("Down")
+setup_shift_selection("Left")
+setup_shift_selection("Right")
+setup_shift_selection("Home")
+setup_shift_selection("End")
