@@ -183,12 +183,25 @@ function M.toggle_dap_ui()
     require("dapui").toggle()
 end
 
-function M.close_unlisted_buffers()
+function M.close_extra_buffers()
+    local function is_extra(id)
+        if not vim.api.nvim_buf_get_option(id, "buflisted") then return true end
+        if vim.api.nvim_buf_get_option(id, "filetype") == "" and vim.api.nvim_buf_get_name(id) == "" then
+            local lines = vim.api.nvim_buf_get_lines(id, 0, -1, false)
+            if #lines == 1 and #lines[1] == 0 then
+                return true
+            end
+        end
+
+        return false
+    end
+
     for _, id in pairs(vim.api.nvim_list_bufs()) do
-        if not vim.api.nvim_buf_get_option(id, "buflisted") then
+        if is_extra(id) then
             vim.cmd("silent! bd " .. tostring(id))
         end
     end
+
     vim.cmd("silent! cclose")
 end
 

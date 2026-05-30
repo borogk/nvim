@@ -1,8 +1,11 @@
+local actions = require("config.actions")
+
 return {
     "rmagatti/auto-session",
     lazy = false,
     opts = {
         auto_restore = false,
         auto_save = false,
+        post_restore_cmds = { actions.close_extra_buffers },
     },
 }
