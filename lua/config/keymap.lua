@@ -31,7 +31,7 @@ vim.keymap.set({ "n", "i", "v" }, "<F12>", actions.quick_menu)
 vim.keymap.set({ "n", "i", "v" }, "<F36>", actions.symbols)
 vim.keymap.set({ "n", "i", "v" }, "<C-CR>", actions.definitions)
 vim.keymap.set({ "n", "i", "v" }, "<S-CR>", actions.references)
-vim.keymap.set({ "i" }, "<C-Space>", actions.auto_complete)
+vim.keymap.set({ "i" }, "<C-a>", actions.auto_complete)
 vim.keymap.set({ "n" }, "{", actions.quickfix_prev)
 vim.keymap.set({ "n" }, "}", actions.quickfix_next)
 
