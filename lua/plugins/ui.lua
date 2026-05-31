@@ -19,11 +19,6 @@ return {
                     explorer = {
                         hidden = true,
                         ignored = true,
-                        auto_close = true,
-                        layout = {
-                            preset = "default",
-                            preview = true,
-                        },
                     },
                     buffers = {
                         sort_lastused = false,

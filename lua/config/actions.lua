@@ -15,22 +15,17 @@ function M.help()
     Snacks.picker.help()
 end
 
-function M.explorer_panel()
-    Snacks.explorer({
-        auto_close = false,
-        layout = {
-            preset = "left",
-            preview = false,
-        },
-    })
-end
-
 function M.pickers()
     Snacks.picker()
 end
 
 function M.explorer()
-    Snacks.explorer.open()
+    local pickers = Snacks.picker.get({source = "explorer"})
+    if #pickers == 0 then
+        Snacks.explorer.reveal()
+    else
+        pickers[1].input.win:focus()
+    end
 end
 
 function M.files()
@@ -185,8 +180,11 @@ end
 
 function M.close_extra_buffers()
     local function is_extra(id)
+        -- Unlisted buffers are extra
         if not vim.api.nvim_buf_get_option(id, "buflisted") then return true end
-        if vim.api.nvim_buf_get_option(id, "filetype") == "" and vim.api.nvim_buf_get_name(id) == "" then
+
+        -- Empty buffers with no filetype are extra
+        if vim.api.nvim_buf_get_option(id, "filetype") == "" then
             local lines = vim.api.nvim_buf_get_lines(id, 0, -1, false)
             if #lines == 1 and #lines[1] == 0 then
                 return true

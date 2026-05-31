@@ -6,6 +6,6 @@ return {
     opts = {
         auto_restore = false,
         auto_save = false,
-        post_restore_cmds = { actions.close_extra_buffers },
+        pre_save_cmds = { actions.close_extra_buffers },
     },
 }
