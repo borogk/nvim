@@ -203,6 +203,10 @@ function M.close_extra_buffers()
     vim.cmd("silent! cclose")
 end
 
+function M.save()
+    vim.cmd("wa")
+end
+
 function M.quick_menu()
     menu.show("Quick menu", {
         { title = "Session...", action = M.session_menu },
