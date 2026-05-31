@@ -9,7 +9,7 @@ vim.cmd("hi DapStoppedColor guifg=#ffff00")
 vim.fn.sign_define("DapBreakpoint", { text = "B", texthl = "DapBreakpointColor", linehl = "", numhl = "" })
 vim.fn.sign_define("DapBreakpointCondition", { text = "C", texthl = "DapBreakpointColor", linehl = "", numhl = "" })
 vim.fn.sign_define("DapBreakpointRejected", { text = "R", texthl = "DapBreakpointRejectedColor", linehl = "", numhl = "" })
-vim.fn.sign_define("DapStopped", { text = "→", texthl = "DapStoppedColor", linehl = "debugPC", numhl = "" })
+vim.fn.sign_define("DapStopped", { text = ">", texthl = "DapStoppedColor", linehl = "debugPC", numhl = "" })
 
 -- DAP UI setup
 
