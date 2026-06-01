@@ -70,13 +70,11 @@ function M.search()
         vim.fn.feedkeys("/")
     elseif mode == "i" then
         vim.fn.feedkeys("\27/")
-    elseif mode == "v" or mode == "V" or mode == "^V" then
+    elseif mode == "v" or mode == "V" then
         vim.cmd('noau normal! "vy"')
         local term = vim.fn.getreg("v"):gsub([[\]], [[\\]]):gsub([[/]], [[\/]]):gsub("\n", "\\n")
         vim.fn.setreg("v", {})
         vim.cmd("silent! /\\V" .. term)
-    else
-        vim.notify(mode)
     end
 end
 
