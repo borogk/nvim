@@ -64,6 +64,22 @@ function M.git_file_history()
     Snacks.lazygit.log_file()
 end
 
+function M.search()
+    local mode = vim.fn.mode()
+    if mode == "n" then
+        vim.fn.feedkeys("/")
+    elseif mode == "i" then
+        vim.fn.feedkeys("\27/")
+    elseif mode == "v" or mode == "V" or mode == "^V" then
+        vim.cmd('noau normal! "vy"')
+        local term = vim.fn.getreg("v"):gsub([[\]], [[\\]]):gsub([[/]], [[\/]]):gsub("\n", "\\n")
+        vim.fn.setreg("v", {})
+        vim.cmd("silent! /\\V" .. term)
+    else
+        vim.notify(mode)
+    end
+end
+
 function M.search_working_directory()
     Snacks.picker.grep()
 end
@@ -237,7 +253,6 @@ end
 
 function M.editor_menu()
     menu.show("Editor menu", {
-        { title = "Clear highlight", action = M.clear_highlight },
         { title = "Toggle wrap", action = M.toggle_wrap },
         { title = "Toggle non-printables", action = M.toggle_non_printables },
         { title = "Undo history...", action = M.undo_history },
