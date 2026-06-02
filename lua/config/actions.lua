@@ -65,25 +65,20 @@ function M.git_file_history()
 end
 
 function M.search()
-    local mode = vim.fn.mode()
-    if mode == "n" then
-        vim.fn.feedkeys("/")
-    elseif mode == "i" then
+    local term = util.grab_selected_text()
+    if term ~= "" then
+        vim.cmd("silent! /\\V" .. term:gsub([[\]], [[\\]]):gsub([[/]], [[\/]]))
+    else
         vim.fn.feedkeys("\27/")
-    elseif mode == "v" or mode == "V" then
-        vim.cmd('noau normal! "vy"')
-        local term = vim.fn.getreg("v"):gsub([[\]], [[\\]]):gsub([[/]], [[\/]]):gsub("\n", "\\n")
-        vim.fn.setreg("v", {})
-        vim.cmd("silent! /\\V" .. term)
     end
 end
 
 function M.search_working_directory()
-    Snacks.picker.grep()
+    Snacks.picker.grep({ search = util.grab_selected_text(), regex = false })
 end
 
 function M.search_git()
-    Snacks.picker.git_grep()
+    Snacks.picker.git_grep({ search = util.grab_selected_text(), regex = false })
 end
 
 function M.format()
