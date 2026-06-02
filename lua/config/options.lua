@@ -9,5 +9,6 @@ vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.title = true
 vim.o.exrc = true
-vim.opt.completeopt = { "menuone", "popup", "noinsert" }
+vim.o.completeopt = "menu,menuone,popup,preview,noinsert"
+vim.o.completetimeout = 1000
 vim.cmd.colorscheme("catppuccin-mocha")

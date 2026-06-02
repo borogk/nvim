@@ -118,8 +118,18 @@ function M.code_action()
     vim.lsp.buf.code_action()
 end
 
-function M.auto_complete()
+function M.lsp_complete()
     vim.lsp.completion.get()
+end
+
+function M.tab_complete()
+    if vim.snippet.active({ direction = 1}) then
+        vim.snippet.jump(1)
+    elseif vim.fn.pumvisible() ~= 0 then
+        vim.fn.feedkeys("\25")
+    else
+        vim.fn.feedkeys("\t", "n")
+    end
 end
 
 function M.restore_session()
