@@ -4,9 +4,22 @@ local actions = require("config.actions")
 vim.api.nvim_create_autocmd("User", {
     pattern = "LazyVimStarted",
     callback = function()
+        -- Startup menu
         if vim.fn.argc() == 0 and vim.fn.has("ttyin") == 1 then
             actions.startup_menu()
         end
+
+        -- Additional bufferline config
+        local groups = require("bufferline.groups")
+        groups = {
+            options = {
+                groups = {
+                    items = {
+                        groups.builtin.pinned:with({ icon = "󰐃" })
+                    }
+                }
+            }
+        }
     end
 })
 

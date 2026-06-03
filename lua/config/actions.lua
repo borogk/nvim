@@ -226,6 +226,34 @@ function M.save()
     vim.cmd("wa")
 end
 
+function M.bufferline_prev()
+    vim.cmd("BufferLineCyclePrev")
+end
+
+function M.bufferline_next()
+    vim.cmd("BufferLineCycleNext")
+end
+
+function M.bufferline_first()
+    vim.cmd("BufferLineGoToBuffer 1")
+end
+
+function M.bufferline_last()
+    vim.cmd("BufferLineGoToBuffer -1")
+end
+
+function M.bufferline_move_prev()
+    vim.cmd("BufferLineMovePrev")
+end
+
+function M.bufferline_move_next()
+    vim.cmd("BufferLineMoveNext")
+end
+
+function M.bufferline_pin()
+    vim.cmd("BufferLineTogglePin")
+end
+
 function M.quick_menu()
     menu.show("Quick menu", {
         { title = "Session...", action = M.session_menu },
