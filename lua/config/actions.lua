@@ -254,6 +254,30 @@ function M.bufferline_pin()
     vim.cmd("BufferLineTogglePin")
 end
 
+function M.bufferline_select()
+    local names = {}
+    for _, el in ipairs(require("bufferline").get_elements().elements) do
+        names[el.id] = el.name
+    end
+
+    local items = {}
+    local groups = require("bufferline.groups")
+    groups.action("pinned", function(buf)
+        table.insert(items, {
+            title = "󰐃 " .. names[buf.id],
+            action = function() vim.cmd("buffer " .. tostring(buf.id)) end,
+        })
+    end)
+    groups.action("ungrouped", function(buf)
+        table.insert(items, {
+            title = names[buf.id],
+            action = function() vim.cmd("buffer " .. tostring(buf.id)) end,
+        })
+    end)
+
+    menu.show("Buffers", items)
+end
+
 function M.quick_menu()
     menu.show("Quick menu", {
         { title = "Session...", action = M.session_menu },
