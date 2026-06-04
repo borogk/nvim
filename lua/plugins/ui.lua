@@ -19,6 +19,9 @@ return {
                     explorer = {
                         hidden = true,
                         ignored = true,
+                        layout = {
+                            preset = "vertical"
+                        }
                     },
                     buffers = {
                         sort_lastused = false,

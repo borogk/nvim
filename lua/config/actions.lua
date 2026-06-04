@@ -20,12 +20,7 @@ function M.pickers()
 end
 
 function M.explorer()
-    local pickers = Snacks.picker.get({source = "explorer"})
-    if #pickers == 0 then
-        Snacks.explorer.reveal()
-    else
-        pickers[1].input.win:focus()
-    end
+    Snacks.explorer()
 end
 
 function M.files()
