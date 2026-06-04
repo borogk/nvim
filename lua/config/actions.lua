@@ -278,6 +278,10 @@ function M.bufferline_select()
     menu.show("Buffers", items)
 end
 
+function M.bufferline_close()
+    vim.cmd("confirm bd")
+end
+
 function M.quick_menu()
     menu.show("Quick menu", {
         { title = "Session...", action = M.session_menu },
