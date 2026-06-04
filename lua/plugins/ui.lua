@@ -13,7 +13,13 @@ return {
             gitbrowse = enabled,
             quickfile = enabled,
             bigfile = enabled,
-            lazygit = enabled,
+            lazygit = {
+                config = {
+                    os = {
+                        edit = '[ -z "$NVIM" ] && (nvim -- {{filename}}) || (nvim --server "$NVIM" --remote-send "q" && nvim --server "$NVIM" --remote {{filename}})',
+                    },
+                }
+            },
             picker = {
                 sources = {
                     explorer = {
