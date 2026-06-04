@@ -43,9 +43,43 @@ vim.keymap.set({ "n" }, "{", actions.quickfix_prev)
 vim.keymap.set({ "n" }, "}", actions.quickfix_next)
 
 local function setup_shift_selection(dir)
-    vim.keymap.set({ "n" }, "<S-" .. dir .. ">", function() vim.fn.feedkeys(vim.api.nvim_replace_termcodes("v<" .. dir .. ">", true, true, true)) end)
-    vim.keymap.set({ "i" }, "<S-" .. dir .. ">", function() vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-o>v<" .. dir .. ">", true, true, true)) end)
-    vim.keymap.set({ "v" }, "<S-" .. dir .. ">", function() vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<" .. dir .. ">", true, true, true)) end)
+    local shortcut = "<S-" .. dir .. ">"
+    local direction_key = "<" .. dir .. ">"
+    vim.keymap.set({ "n" }, shortcut, "v" .. direction_key)
+    vim.keymap.set({ "v" }, shortcut, direction_key)
+    vim.keymap.set({ "i" }, shortcut, function()
+        local cursor = vim.api.nvim_win_get_cursor(0)
+        local line = cursor[1]
+        local col = cursor[2]
+
+        -- Below code tries to mimic "regular" text editor behaviour by excluding current character from selection
+        -- when moving left or up, which is more intuitive with Insert mode cursor's shape.
+        -- This only applies to the first directional press, then we enter Visual mode,
+        -- where the cursor turns solid and stock nvim controls make more sense.
+
+        local command = ""
+        if dir == "Left" or dir == "Home" then
+            if col > 0 then
+                command = "<Left><C-o>v" .. direction_key
+            end
+        elseif dir == "Up" then
+            if line == 1 then
+                if col > 0 then
+                    command = "<Left><C-o>v<Home>"
+                end
+            else
+                if col > 0 then
+                    command = "<Left><C-o>v<Home><Up>"
+                else
+                    command = "<Up><End><C-o>v<Home>"
+                end
+            end
+        else
+            command = "<C-o>v" .. direction_key
+        end
+
+        vim.fn.feedkeys(vim.api.nvim_replace_termcodes(command, true, true, true))
+    end)
 end
 
 setup_shift_selection("Up")
