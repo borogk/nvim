@@ -19,8 +19,18 @@ function M.pickers()
     Snacks.picker()
 end
 
-function M.explorer()
-    Snacks.explorer()
+function M.cycle_explorers()
+    local explorer = Snacks.picker.get({source = "explorer"})
+    local bufferline = Snacks.picker.get({source = "bufferline"})
+
+    if #explorer == 0 and #bufferline == 0 then
+        Snacks.explorer.reveal()
+    elseif #explorer == 1 and #bufferline == 0 then
+        explorer[1]:close()
+        M.bufferline_select()
+    elseif #explorer == 0 and #bufferline == 1 then
+        bufferline[1]:close()
+    end
 end
 
 function M.files()
@@ -250,27 +260,61 @@ function M.bufferline_pin()
 end
 
 function M.bufferline_select()
-    local names = {}
-    for _, el in ipairs(require("bufferline").get_elements().elements) do
-        names[el.id] = el.name
+    local existing_picker = Snacks.picker.get({source = "bufferline"})
+    if #existing_picker == 1 then
+        existing_picker[1]:close()
+        return
     end
 
     local items = {}
-    local groups = require("bufferline.groups")
-    groups.action("pinned", function(buf)
-        table.insert(items, {
-            title = "󰐃 " .. names[buf.id],
-            action = function() vim.cmd("buffer " .. tostring(buf.id)) end,
-        })
-    end)
-    groups.action("ungrouped", function(buf)
-        table.insert(items, {
-            title = names[buf.id],
-            action = function() vim.cmd("buffer " .. tostring(buf.id)) end,
-        })
-    end)
+    local current_buf = vim.fn.bufnr()
+    local current_buf_pos = 1
 
-    menu.show("Buffers", items)
+    local pos = 1
+    local iterate = function(buf)
+        local name = vim.api.nvim_buf_get_name(buf.id)
+        if name == "" then
+            name = "[No Name]"
+        end
+
+        local info = vim.fn.getbufinfo(buf.id)[1]
+        table.insert(items, {
+            flags = pinned and { "󰐃" } or "",
+            buf = buf.id,
+            buftype = vim.bo[buf.id].buftype,
+            filetype = vim.bo[buf.id].filetype,
+            file = name,
+            info = info,
+            pos = { info.lnum, 0 },
+        })
+
+        if buf.id == current_buf then
+            current_buf_pos = pos
+        end
+
+        pos = pos + 1
+    end
+
+    local groups = require("bufferline.groups")
+    groups.action("pinned", iterate)
+    groups.action("ungrouped", iterate)
+
+    local picker = Snacks.picker.pick({
+        title = "Open buffers",
+        format = "buffer",
+        source = "bufferline",
+        finder = function()
+            return items
+        end,
+        confirm = function(picker, item)
+            picker:close()
+            if item then
+                vim.cmd("buffer " .. tostring(item.buf))
+            end
+        end,
+    })
+
+    picker.list:move(current_buf_pos, true)
 end
 
 function M.bufferline_close()
