@@ -279,7 +279,7 @@ function M.bufferline_select()
 
         local info = vim.fn.getbufinfo(buf.id)[1]
         table.insert(items, {
-            flags = pinned and { "󰐃" } or "",
+            text = name,
             buf = buf.id,
             buftype = vim.bo[buf.id].buftype,
             filetype = vim.bo[buf.id].filetype,
@@ -303,8 +303,8 @@ function M.bufferline_select()
         title = "Open buffers",
         format = "buffer",
         source = "bufferline",
-        finder = function()
-            return items
+        finder = function(_, ctx)
+            return ctx.filter:filter(items)
         end,
         confirm = function(picker, item)
             picker:close()
@@ -312,6 +312,10 @@ function M.bufferline_select()
                 vim.cmd("buffer " .. tostring(item.buf))
             end
         end,
+        layout = {
+            preset = "vertical",
+            preview = true,
+        },
     })
 
     picker.list:move(current_buf_pos, true)
