@@ -26,8 +26,8 @@ function M.cycle_explorers()
     if #explorer == 0 and #bufferline == 0 then
         Snacks.explorer.reveal()
     elseif #explorer == 1 and #bufferline == 0 then
-        M.bufferline_select()
         explorer[1]:close()
+        M.bufferline_select()
     elseif #explorer == 0 and #bufferline == 1 then
         bufferline[1]:close()
     end
