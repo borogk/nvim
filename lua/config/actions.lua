@@ -19,6 +19,10 @@ function M.pickers()
     Snacks.picker()
 end
 
+function M.explorer()
+    Snacks.explorer.reveal()
+end
+
 function M.cycle_explorers()
     local explorer = Snacks.picker.get({source = "explorer"})
     local bufferline = Snacks.picker.get({source = "bufferline"})
@@ -266,44 +270,62 @@ function M.bufferline_select()
         return
     end
 
-    local items = {}
+    local bufferline_state = require("bufferline.state")
+    local bufferline_groups = require("bufferline.groups")
+    local bufferline_commands = require("bufferline.commands")
+
     local current_buf = vim.fn.bufnr()
-    local current_buf_pos = 1
+    local current_buf_i = 1
+    local last_i = 1
 
-    local pos = 1
-    local iterate = function(buf)
-        local name = vim.api.nvim_buf_get_name(buf.id)
-        if name == "" then
-            name = "[No Name]"
-        end
-
-        local info = vim.fn.getbufinfo(buf.id)[1]
-        table.insert(items, {
-            text = name,
-            buf = buf.id,
-            buftype = vim.bo[buf.id].buftype,
-            filetype = vim.bo[buf.id].filetype,
-            file = name,
-            info = info,
-            pos = { info.lnum, 0 },
-        })
-
-        if buf.id == current_buf then
-            current_buf_pos = pos
-        end
-
-        pos = pos + 1
+    local select_current_buf = function(picker)
+        picker.list:move(current_buf_i, true)
     end
-
-    local groups = require("bufferline.groups")
-    groups.action("pinned", iterate)
-    groups.action("ungrouped", iterate)
 
     local picker = Snacks.picker.pick({
         title = "Open buffers",
         format = "buffer",
         source = "bufferline",
         finder = function(_, ctx)
+            local items = {}
+
+            local i = 1
+            local iterate = function(buf, pinned)
+                local name = vim.api.nvim_buf_get_name(buf.id)
+                if name == "" then
+                    name = "[No Name]"
+                end
+
+                local info = vim.fn.getbufinfo(buf.id)[1]
+
+                local flags = {" ", " ", " "}
+                 if pinned then
+                    flags[1] = "󰐃"
+                end
+                if buf.id == current_buf then
+                    current_buf_i = i
+                    flags[2] = "▶"
+                end
+
+                table.insert(items, {
+                    text = name,
+                    buf = buf.id,
+                    buftype = vim.bo[buf.id].buftype,
+                    filetype = vim.bo[buf.id].filetype,
+                    file = name,
+                    info = info,
+                    pos = { info.lnum, 0 },
+                    index = i,
+                    flags = table.concat(flags, ""),
+                })
+
+                last_i = i
+                i = i + 1
+            end
+
+            bufferline_groups.action("pinned", function(buf) iterate(buf, true) end)
+            bufferline_groups.action("ungrouped", function(buf) iterate(buf, false) end)
+
             return ctx.filter:filter(items)
         end,
         confirm = function(picker, item)
@@ -316,9 +338,49 @@ function M.bufferline_select()
             preset = "vertical",
             preview = true,
         },
+        win = {
+            input = {
+                keys = {
+                    ["<Delete>"] = { "bufdelete", mode = { "n", "i" } },
+                    ["<C-w>"] = { "bufdelete", mode = { "n", "i" } },
+                    ["<C-p>"] = { "pin", mode = { "n", "i" } },
+                    ["<C-Up>"] = { "shift_up", mode = { "n", "i" } },
+                    ["<C-Down>"] = { "shift_down", mode = { "n", "i" } },
+                },
+            },
+        },
+        actions = {
+            pin = function(picker, item)
+                if item then
+                    local element = bufferline_state.components[item.index]
+                    if bufferline_groups._is_pinned(element) then
+                        bufferline_groups.remove_element("pinned", element)
+                    else
+                        bufferline_groups.add_element("pinned", element)
+                    end
+
+                    picker:refresh()
+                    select_current_buf(picker)
+                end
+            end,
+            shift_up = function(picker, item)
+                if item and item.index > 1 then
+                    bufferline_commands.move_to(item.index - 1, item.index)
+                    picker:refresh()
+                    picker.list:move(item.index - 1, true)
+                end
+            end,
+            shift_down = function(picker, item)
+                if item and item.index < last_i then
+                    bufferline_commands.move_to(item.index + 1, item.index)
+                    picker:refresh()
+                    picker.list:move(item.index + 1, true)
+                end
+            end,
+        },
     })
 
-    picker.list:move(current_buf_pos, true)
+    select_current_buf(picker)
 end
 
 function M.bufferline_close()
