@@ -342,10 +342,13 @@ function M.bufferline_select()
             input = {
                 keys = {
                     ["<Delete>"] = { "bufdelete", mode = { "n", "i" } },
-                    ["<C-w>"] = { "bufdelete", mode = { "n", "i" } },
+                    ["<Backspace>"] = { "bufdelete", mode = { "n", "i" } },
                     ["<C-p>"] = { "pin", mode = { "n", "i" } },
+                    ["<S-p>"] = { "pin", mode = { "n", "i" } },
                     ["<C-Up>"] = { "shift_up", mode = { "n", "i" } },
+                    ["<S-Up>"] = { "shift_up", mode = { "n", "i" } },
                     ["<C-Down>"] = { "shift_down", mode = { "n", "i" } },
+                    ["<S-Down>"] = { "shift_down", mode = { "n", "i" } },
                 },
             },
         },
