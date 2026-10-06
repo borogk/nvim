@@ -41,7 +41,7 @@ function M.files()
     Snacks.picker.files()
 end
 
-function M.recent()
+function M.recent_files()
     Snacks.picker.recent()
 end
 
@@ -140,7 +140,7 @@ function M.restore_session()
     vim.cmd("AutoSession restore")
 end
 
-function M.switch_session()
+function M.recent_sessions()
     vim.cmd("AutoSession search")
 end
 
@@ -405,8 +405,8 @@ end
 function M.startup_menu()
     menu.show("Startup menu", {
         { title = "Restore session (" .. vim.fn.getcwd() .. ")", action = M.restore_session },
-        { title = "Switch session...", action = M.switch_session },
-        { title = "Recent...", action = M.recent },
+        { title = "Recent session...", action = M.recent_sessions },
+        { title = "Recent files...", action = M.recent_files },
         { title = "Quit", action = M.quit },
     })
 end
@@ -414,10 +414,10 @@ end
 function M.session_menu()
     local buffers_count = util.pluralize_noun(util.listed_buffers_count(), "buffer", "s")
     menu.show("Session menu (" .. vim.fn.getcwd() .. ")", {
-        { title = "Save session and quit (" .. buffers_count .. ")", action = M.save_session_and_quit },
-        { title = "Save session", action = M.save_session },
-        { title = "Switch session...", action = M.switch_session },
-        { title = "Recent...", action = M.recent },
+        { title = "Restore session (" .. vim.fn.getcwd() .. ")", action = M.restore_session },
+        { title = "Recent sessions...", action = M.recent_sessions },
+        { title = "Recent files...", action = M.recent_files },
+        { title = "Save session (" .. buffers_count .. ")", action = M.save_session },
     })
 end
 
