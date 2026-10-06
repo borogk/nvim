@@ -316,7 +316,7 @@ function M.bufferline_select()
                     info = info,
                     pos = { info.lnum, 0 },
                     index = i,
-                    flags = table.concat(flags, ""),
+                    flags = table.concat(flags, " "),
                 })
 
                 last_i = i
