@@ -44,6 +44,8 @@ vim.keymap.set({ "i" }, "<C-m>", actions.lsp_complete)
 vim.keymap.set({ "i" }, "<Tab>", actions.tab_complete)
 vim.keymap.set({ "n" }, "{", actions.quickfix_prev)
 vim.keymap.set({ "n" }, "}", actions.quickfix_next)
+vim.keymap.set({ "n" }, "x", "\"_x")
+vim.keymap.set({ "n", "v" }, "d", "\"_d")
 
 local function setup_shift_selection(dir)
     local shortcut = "<S-" .. dir .. ">"
