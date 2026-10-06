@@ -5,7 +5,7 @@ return {
     lazy = false,
     opts = {
         auto_restore = false,
-        auto_save = false,
+        auto_save = true,
         pre_save_cmds = { actions.close_extra_buffers },
         save_extra_data = function()
             local groups = require("bufferline.groups")
