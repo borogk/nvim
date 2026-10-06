@@ -57,18 +57,18 @@ Although the necessary plugins for LSP are included in this repo, LSP servers mu
 Run `:Mason` command to bring up Mason UI with a list of implementations for various languages.
 Press `g?` for help with what button to press to install/update etc.
 
-## lazygit + delta
+## lazygit + diff-so-fancy
 
 Install [lazygit](https://github.com/jesseduffield/lazygit?tab=readme-ov-file#installation) to enable fancy git interface.
 
-Additionally, install [delta](https://dandavison.github.io/delta/installation.html) for better diff visualization.
+Additionally, install [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy#-install) for better diff visualization.
 
 Lazygit configuration (see `config.yml` location in [docs](https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md)):
 
 ```yaml
 git:
   pagers:
-    - pager: delta --dark --paging=never
+    - pager: diff-so-fancy
   log:
     showWholeGraph: true
 ```
