@@ -73,6 +73,10 @@ function M.git_file_history()
     Snacks.lazygit.log_file()
 end
 
+function M.git_blame()
+    vim.cmd("Gitsigns blame")
+end
+
 function M.search()
     local term = util.grab_selected_text()
     if term ~= "" then
@@ -426,6 +430,14 @@ function M.editor_menu()
         { title = "Toggle wrap", action = M.toggle_wrap },
         { title = "Toggle non-printables", action = M.toggle_non_printables },
         { title = "Undo history...", action = M.undo_history },
+    })
+end
+
+function M.git_menu()
+    menu.show("Git menu", {
+        { title = "Lazygit", action = M.git },
+        { title = "Blame", action = M.git_blame },
+        { title = "History", action = M.git_file_history },
     })
 end
 
