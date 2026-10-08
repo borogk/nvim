@@ -10,7 +10,7 @@ end
 
 function M.checkmark_text(value)
     if value then
-        return "[]"
+        return "[x]"
     else
         return "[ ]"
     end
