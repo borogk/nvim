@@ -169,6 +169,14 @@ function M.toggle_non_printables()
     vim.cmd("set list!")
 end
 
+function M.toggle_linenumbers()
+    vim.cmd("set number!")
+end
+
+function M.toggle_diagnostions()
+    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end
+
 function M.clear_highlight()
     vim.cmd("noh")
 end
@@ -431,8 +439,10 @@ end
 
 function M.editor_menu()
     menu.show("Editor menu", {
-        { title = "Toggle wrap", action = M.toggle_wrap },
-        { title = "Toggle non-printables", action = M.toggle_non_printables },
+        { title = util.checkmark_text(vim.o.wrap) .. " Toggle wrap", action = M.toggle_wrap },
+        { title = util.checkmark_text(vim.o.list) .. " Toggle non-printables", action = M.toggle_non_printables },
+        { title = util.checkmark_text(vim.o.number) .. " Toggle line numbers", action = M.toggle_linenumbers },
+        { title = util.checkmark_text(vim.diagnostic.is_enabled()) .. " Toggle diagnostics", action = M.toggle_diagnostions },
         { title = "Undo history...", action = M.undo_history },
     })
 end

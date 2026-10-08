@@ -8,6 +8,14 @@ function M.pluralize_noun(count, noun, ending)
     end
 end
 
+function M.checkmark_text(value)
+    if value then
+        return "[]"
+    else
+        return "[ ]"
+    end
+end
+
 function M.listed_buffers_count()
     local result = 0
     for _, id in pairs(vim.api.nvim_list_bufs()) do
