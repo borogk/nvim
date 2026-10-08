@@ -77,6 +77,10 @@ function M.git_blame()
     vim.cmd("Gitsigns blame")
 end
 
+function M.git_hunks()
+    vim.cmd("Gitsigns setqflist all")
+end
+
 function M.search()
     local term = util.grab_selected_text()
     if term ~= "" then
@@ -438,6 +442,7 @@ function M.git_menu()
         { title = "Lazygit", action = M.git },
         { title = "Blame", action = M.git_blame },
         { title = "History", action = M.git_file_history },
+        { title = "Hunks", action = M.git_hunks },
     })
 end
 

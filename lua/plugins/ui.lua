@@ -59,6 +59,7 @@ return {
                         "dapui_scopes",
                         "dapui_watches",
                         "dap-repl",
+                        "gitsigns-blame",
                     },
                     sections = {
                         lualine_a = { "mode" },
