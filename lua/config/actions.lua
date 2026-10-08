@@ -177,8 +177,9 @@ function M.toggle_diagnostions()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end
 
-function M.clear_highlight()
+function M.clear()
     vim.cmd("noh")
+    M.close_extra_buffers()
 end
 
 function M.undo_history()

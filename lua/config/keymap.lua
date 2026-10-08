@@ -1,6 +1,6 @@
 local actions = require("config.actions")
 
-vim.keymap.set({ "n" }, "<Esc>", actions.clear_highlight)
+vim.keymap.set({ "n" }, "<Esc>", actions.clear)
 vim.keymap.set({ "n" }, "<C-Esc>", actions.close_extra_buffers)
 vim.keymap.set({ "n" }, "<S-Esc>", actions.close_extra_buffers)
 vim.keymap.set({ "n", "i", "v" }, "<C-\\>", actions.pickers)
