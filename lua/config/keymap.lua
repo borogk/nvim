@@ -51,13 +51,21 @@ vim.keymap.set({ "n" }, "}", actions.quickfix_next)
 vim.keymap.set({ "n" }, "x", "\"_x")
 vim.keymap.set({ "n", "v" }, "d", "\"_d")
 
--- Text shifting magic
-vim.keymap.set({ "n" }, "<C-Up>", ":m -2<CR>==")
-vim.keymap.set({ "n" }, "<C-Down>", ":m +1<CR>==")
-vim.keymap.set({ "i" }, "<C-Up>", "<ESC>:m -2<CR>==gi")
-vim.keymap.set({ "i" }, "<C-Down>", "<ESC>:m +1<CR>==gi")
-vim.keymap.set({ "v" }, "<C-Up>", ":m '<-2<CR>gv=gv")
-vim.keymap.set({ "v" }, "<C-Down>", ":m '>+1<CR>gv=gv")
+-- Set up text shifting magic
+-- Should work for CTRL, CTRL+SHIFT, CMD and CMD+SHIFT modifiers
+local function setup_text_shift(modifier_key)
+    vim.keymap.set({ "n" }, "<" .. modifier_key .. "-Up>", ":m -2<CR>==")
+    vim.keymap.set({ "n" }, "<" .. modifier_key .. "-Down>", ":m +1<CR>==")
+    vim.keymap.set({ "i" }, "<" .. modifier_key .. "-Up>", "<ESC>:m -2<CR>==gi")
+    vim.keymap.set({ "i" }, "<" .. modifier_key .. "-Down>", "<ESC>:m +1<CR>==gi")
+    vim.keymap.set({ "v" }, "<" .. modifier_key .. "-Up>", ":m '<-2<CR>gv=gv")
+    vim.keymap.set({ "v" }, "<" .. modifier_key .. "-Down>", ":m '>+1<CR>gv=gv")
+end
+
+setup_text_shift("C")
+setup_text_shift("C-S")
+setup_text_shift("D")
+setup_text_shift("D-S")
 
 -- Set up SHIFT-Arrow selection
 -- Horizontal movement turns on regular visual mode
