@@ -51,6 +51,14 @@ vim.keymap.set({ "n" }, "}", actions.quickfix_next)
 vim.keymap.set({ "n" }, "x", "\"_x")
 vim.keymap.set({ "n", "v" }, "d", "\"_d")
 
+-- Text shifting magic
+vim.keymap.set({ "n" }, "<C-Up>", ":m -2<CR>==")
+vim.keymap.set({ "n" }, "<C-Down>", ":m +1<CR>==")
+vim.keymap.set({ "i" }, "<C-Up>", "<ESC>:m -2<CR>==gi")
+vim.keymap.set({ "i" }, "<C-Down>", "<ESC>:m +1<CR>==gi")
+vim.keymap.set({ "v" }, "<C-Up>", ":m '<-2<CR>gv=gv")
+vim.keymap.set({ "v" }, "<C-Down>", ":m '>+1<CR>gv=gv")
+
 local function setup_shift_selection(dir)
     local shortcut = "<S-" .. dir .. ">"
     local direction_key = "<" .. dir .. ">"
