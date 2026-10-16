@@ -59,40 +59,31 @@ vim.keymap.set({ "i" }, "<C-Down>", "<ESC>:m +1<CR>==gi")
 vim.keymap.set({ "v" }, "<C-Up>", ":m '<-2<CR>gv=gv")
 vim.keymap.set({ "v" }, "<C-Down>", ":m '>+1<CR>gv=gv")
 
+-- Set up SHIFT-Arrow selection
+-- Horizontal movement turns on regular visual mode
+-- Vertical movement turns on line visual mode
+-- If already in visual mode - repeats arrow key behaviour as if SHIFT wasn't pressed
 local function setup_shift_selection(dir)
     local shortcut = "<S-" .. dir .. ">"
     local direction_key = "<" .. dir .. ">"
-    vim.keymap.set({ "n" }, shortcut, "v" .. direction_key)
+    local enter_visual = "v"
+    if dir == "Up" or dir == "Down" then
+        enter_visual = "<S-v>"
+    end
+
+    vim.keymap.set({ "n" }, shortcut, enter_visual .. direction_key)
     vim.keymap.set({ "v" }, shortcut, direction_key)
     vim.keymap.set({ "i" }, shortcut, function()
         local cursor = vim.api.nvim_win_get_cursor(0)
-        local line = cursor[1]
         local col = cursor[2]
-
-        -- Below code tries to mimic "regular" text editor behaviour by excluding current character from selection
-        -- when moving left or up, which is more intuitive with Insert mode cursor's shape.
-        -- This only applies to the first directional press, then we enter Visual mode,
-        -- where the cursor turns solid and stock nvim controls make more sense.
 
         local command = ""
         if dir == "Left" or dir == "Home" then
             if col > 0 then
-                command = "<Left><C-o>v" .. direction_key
-            end
-        elseif dir == "Up" then
-            if line == 1 then
-                if col > 0 then
-                    command = "<Left><C-o>v<Home>"
-                end
-            else
-                if col > 0 then
-                    command = "<Left><C-o>v<Home><Up>"
-                else
-                    command = "<Up><End><C-o>v<Home>"
-                end
+                command = "<Left><C-o>" .. enter_visual .. direction_key
             end
         else
-            command = "<C-o>v" .. direction_key
+            command = "<C-o>" .. enter_visual .. direction_key
         end
 
         vim.fn.feedkeys(vim.api.nvim_replace_termcodes(command, true, true, true))
