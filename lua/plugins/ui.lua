@@ -80,6 +80,8 @@ return {
             options = {
                 themable = false,
                 separator_style = "slant",
+                buffer_close_icon = '',
+                close_icon = '',
             },
         },
     },
